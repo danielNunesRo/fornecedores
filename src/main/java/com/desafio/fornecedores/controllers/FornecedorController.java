@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desafio.fornecedores.domain.Fornecedor;
 import com.desafio.fornecedores.services.FornecedorService;
+
+import handlerexceptions.FornecedorNotFoundException;
 
 @RestController
 @RequestMapping(value = "/fornecedores")
@@ -45,6 +48,21 @@ public class FornecedorController {
         fornecedorService.excluirFornecedorPorId(fornecedorId);
         return ResponseEntity.noContent().build();
     }
+	
+	 @PutMapping("/{fornecedorId}")
+	    public ResponseEntity<Fornecedor> atualizarFornecedor(
+	            @PathVariable Long fornecedorId,
+	            @RequestBody AtualizaFornecedorRequest request
+	    ) throws FornecedorNotFoundException {
+	        Fornecedor fornecedorAtualizado = fornecedorService.atualizarFornecedor(
+	            fornecedorId,
+	            request.getNovaRazaoSocial(),
+	            request.getNovoEndereco(),
+	            request.getIdsContatos()
+	        );
+
+	        return ResponseEntity.ok(fornecedorAtualizado);
+	    }
 	
 	
 }

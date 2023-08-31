@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.desafio.fornecedores.domain.Contato;
 import com.desafio.fornecedores.repositories.ContatoRepository;
 
+import handlerexceptions.ContatoNotFoundException;
+
 @Service
 public class ContatoService {
 	
@@ -30,4 +32,13 @@ public class ContatoService {
         repository.deleteById(contatoId);
     }
 	
+	public Contato atualizarContato(Long contatoId, String novoNome, String novoEmail) throws ContatoNotFoundException {
+        Contato contatoExistente = repository.findById(contatoId)
+                .orElseThrow(() -> new ContatoNotFoundException("Contato não encontrado com o ID: " + contatoId));
+
+        contatoExistente.setNome(novoNome);
+        contatoExistente.setEmail(novoEmail);
+
+        return repository.save(contatoExistente);
+    }
 }
