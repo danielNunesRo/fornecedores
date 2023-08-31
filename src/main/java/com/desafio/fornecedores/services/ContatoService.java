@@ -26,4 +26,8 @@ public class ContatoService {
         return repository.findAll();
     }
 	
+	public void excluirContato(Long contatoId) {
+        repository.deleteById(contatoId);
+    }
+	
 }

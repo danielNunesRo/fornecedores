@@ -38,6 +38,10 @@ public class FornecedorService {
 
 	        return fornecedorRepository.save(novoFornecedor);
 	    }
+	 
+	 public void excluirFornecedorPorId(Long fornecedorId) {
+	        fornecedorRepository.deleteById(fornecedorId);
+	    }
 
 	
 
